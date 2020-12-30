@@ -30,7 +30,7 @@ struct StateColor states[NUM_STATES] = {
   {cyan,    'c', false},
   {magenta, 'm', false},
   {yellow,  'y', false},
-  {white,   'w', true},
+  {white,   'w', false},
   {pink,    'p', false},
 }; 
 
