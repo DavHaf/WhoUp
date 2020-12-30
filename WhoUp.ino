@@ -17,7 +17,7 @@ struct Color off = {0, 0, 0};
 struct Color red = {COLOR_MAX, 0, 0};
 struct Color green = {0, COLOR_MAX, 0};
 struct Color blue = {0, 0, COLOR_MAX};
-struct Color cyan = {0, COLOR_MAX, };
+struct Color cyan = {0, COLOR_MAX, COLOR_MAX};
 struct Color magenta = {COLOR_MAX, 0, COLOR_MAX};
 struct Color yellow = {COLOR_MAX, COLOR_MAX, 0};
 struct Color white = {COLOR_MAX, COLOR_MAX, COLOR_MAX};
@@ -63,12 +63,9 @@ void serialEvent() {
     int j = 0;
     for (j = 0; j < NUM_STATES; j++) {
       if (states[j].name == tolower(incomingByte)) {
-        Serial.write('f');
         if (states[j].name == incomingByte) {
-          Serial.write('+');
           states[j].active = true;
         } else {
-          Serial.write('-');
           states[j].active = false;
         }
       }
