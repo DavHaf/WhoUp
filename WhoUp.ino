@@ -1,4 +1,3 @@
-int i = 0;
 #define COLOR_MAX (255)
 #define NUM_STATES (7)
 
@@ -37,12 +36,24 @@ void setup() {
   Serial.begin(9600);
 }
 
+int i = 0;
+bool hasColor = false;
 void loop() {
   if (states[i].active) {
     updateLed(states[i].color);
+    hasColor = true;
     delay(1000);
   }
 
+  i++;
+  if (i == NUM_STATES) {
+    if (!hasColor) {
+      updateLed(off);
+      delay(1000);
+    }
+    hasColor = false;
+    i = 0;
+  }
   i = (i + 1) % NUM_STATES;
 }
 
@@ -51,11 +62,13 @@ void serialEvent() {
     char incomingByte = (char) Serial.read();
     int j = 0;
     for (j = 0; j < NUM_STATES; j++) {
-      if (states[j].name == incomingByte) {
-        incomingByte = (char) Serial.read();
-        if (incomingByte == '+') {
+      if (states[j].name == tolower(incomingByte)) {
+        Serial.write('f');
+        if (states[j].name == incomingByte) {
+          Serial.write('+');
           states[j].active = true;
-        } else if (incomingByte == '-') {
+        } else {
+          Serial.write('-');
           states[j].active = false;
         }
       }
@@ -64,7 +77,7 @@ void serialEvent() {
 }
 
 void updateLed(struct Color color) {
-  analogWrite(11, color.r);
-  analogWrite(12, color.g);
-  analogWrite(13, color.b);
+  analogWrite(10, color.r);
+  analogWrite(11, color.g);
+  analogWrite(12, color.b);
 }
