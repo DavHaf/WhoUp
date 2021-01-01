@@ -7,8 +7,15 @@ import time
 
 # None means hidden
 users = {
-  '138': None, # Admin
-  '118': b'y' # me
+  '138' : None, # Admin
+  '118' : None, # me
+  '3'   : b'w', # Nick Martz
+  '127' : b'p', # TJ
+  '130' : b'p', # TJ
+  '132' : b'g', # Troy
+  '139' : b'b', # Nick Mac
+  '135' : b'y', # Alex
+  '112' : b'c'  # Mikey
 }
 
 connected = list()
