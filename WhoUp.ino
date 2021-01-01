@@ -1,3 +1,10 @@
+/**
+ * Accept inputs on serial port 9600
+ * Lowercase character to add color (r = red)
+ * Uppercase character to remove color
+ * '-' to clear
+ */
+
 #define NUM_STATES (8)
 #define DELAY (1000)
 
@@ -36,6 +43,16 @@ struct StateColor states[NUM_STATES] = {
 
 void setup() {
   Serial.begin(9600);
+
+  // flash red on initialization
+  updateLed(red);
+  delay(DELAY / 4);
+  updateLed(off);
+  delay(DELAY / 4);
+  updateLed(red);
+  delay(DELAY / 4);
+  updateLed(off);
+  delay(DELAY / 4);
 }
 
 int i = 0;
@@ -63,12 +80,21 @@ void serialEvent() {
   while (Serial.available()) {
     char incomingByte = (char) Serial.read();
     int j = 0;
-    char byteLower = tolower(incomingByte);
-    for (j = 0; j < NUM_STATES; j++) {
-      if (states[j].name == byteLower) {
-        states[j].active = states[j].name == incomingByte;
+    // remove all colors
+    if (incomingByte == '-') {
+      for (j = 0; j < NUM_STATES; j++) {
+        states[j].active = false;
       }
-    } 
+    }
+    // add or remove a new color to the cycle
+    else {
+      char byteLower = tolower(incomingByte);
+      for (j = 0; j < NUM_STATES; j++) {
+        if (states[j].name == byteLower) {
+          states[j].active = states[j].name == incomingByte;
+        }
+      }
+    }
   }
 }
 
