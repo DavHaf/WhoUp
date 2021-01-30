@@ -45,7 +45,7 @@ time.sleep(3)
 ser.write(b'-')
 
 connRegex = re.compile("\|client connected '.*'\(id:(\d+)\) from \d+\.\d+\.\d+\.\d+:\d+$")
-discRegex = re.compile("\|client disconnected '.*'\(id:(\d+)\) reason 'reasonmsg=.*'$")
+discRegex = re.compile("\|client disconnected '.*'\(id:(\d+)\) reason '.*'$")
 
 proc = subprocess.Popen(['docker', 'logs', 'ts', '-f'],stdout=subprocess.PIPE)
 
