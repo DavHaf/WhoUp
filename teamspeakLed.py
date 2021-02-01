@@ -16,6 +16,7 @@ users = {
   '141' : b'p', # TJ
   '142' : b'p', # TJ
   '132' : b'g', # Troy
+  '131' : b'b', # Nick Mac
   '139' : b'b', # Nick Mac
   '135' : b'y', # Alex
   '112' : b'c'  # Mikey
