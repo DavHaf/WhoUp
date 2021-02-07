@@ -10,6 +10,7 @@ users = {
   '138' : None, # Admin
   '118' : None, # me
   '3'   : b'w', # Nick Martz
+  '134'   : b'w', # Nick Martz
   '127' : b'p', # TJ
   '130' : b'p', # TJ
   '140' : b'p', # TJ
