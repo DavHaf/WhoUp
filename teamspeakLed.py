@@ -19,6 +19,7 @@ users = {
   '132' : b'g', # Troy
   '131' : b'b', # Nick Mac
   '139' : b'b', # Nick Mac
+  '42' : b'b', # Nick Mac
   '133' : b'y', # Alex
   '135' : b'y', # Alex
   '112' : b'c'  # Mikey
