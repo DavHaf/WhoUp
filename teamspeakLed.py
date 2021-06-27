@@ -5,27 +5,21 @@ import re
 import serial
 import time
 
-# None means hidden
-users = {
-  '138' : None, # Admin
-  '118' : None, # me
-  '3'   : b'w', # Nick Martz
-  '134'   : b'w', # Nick Martz
-  '127' : b'p', # TJ
-  '130' : b'p', # TJ
-  '140' : b'p', # TJ
-  '141' : b'p', # TJ
-  '142' : b'p', # TJ
-  '132' : b'g', # Troy
-  '131' : b'b', # Nick Mac
-  '139' : b'b', # Nick Mac
-  '42' : b'b', # Nick Mac
-  '133' : b'y', # Alex
-  '135' : b'y', # Alex
-  '112' : b'c'  # Mikey
-}
 
 connected = list()
+
+def makeUsersList():
+    users = {}
+    file = open("ts_names.txt", "r")
+    for line in file:
+        values = line.split()
+        if len(values) >= 2 and values[0] != '#':
+            ledValue = None
+            # Get the LED value and convert it to a byte
+            if values[1] != 'x':
+                ledValue = bytes(values[1], 'ascii')
+            users[values[0]] = ledValue
+    return users
 
 def updateLed():
   ser.write(b'-')
@@ -48,10 +42,12 @@ ser.open()
 time.sleep(3)
 ser.write(b'-')
 
+users = makeUsersList()
+
 connRegex = re.compile("\|client connected '.*'\(id:(\d+)\) from \d+\.\d+\.\d+\.\d+:\d+$")
 discRegex = re.compile("\|client disconnected '.*'\(id:(\d+)\) reason '.*'$")
 
-proc = subprocess.Popen(['docker', 'logs', 'ts', '-f'],stdout=subprocess.PIPE)
+proc = subprocess.Popen(['docker', 'logs', 'ts', '--follow', '--tail', '15'],stdout=subprocess.PIPE)
 
 while True:
   line = proc.stdout.readline().decode('utf-8')
